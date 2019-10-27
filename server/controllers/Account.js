@@ -2,12 +2,12 @@ const models = require('../models');
 
 const Account = models.Account;
 
-const loginPage = (req,res) => {
+const loginPage = (req, res) => {
     res.render('login');
 };
 
-const signupPage = (req,res) => {
-    res.render('singup');
+const signupPage = (req, res) => {
+    res.render('signup');
 };
 
 const logout = (req, res) => {
@@ -26,7 +26,7 @@ const login = (request, response) => {
         return res.status(400).json({ error: 'RAWR! All fields are required' });
     };
     
-    return Account.AccountModel.authenticate(username, password, (err. account) => {
+    return Account.AccountModel.authenticate(username, password, (err, account) => {
         if (err || !account) {
             return res.status(401).json({ error: 'Wrong username or password' });
         }
@@ -81,5 +81,5 @@ const signup = (request, response) => {
 module.exports.loginPage = loginPage;
 module.exports.login = login;
 module.exports.logout = logout;
-module.exports.singupPage = signupPage;
+module.exports.signupPage = signupPage;
 module.exports.signup = signup;
