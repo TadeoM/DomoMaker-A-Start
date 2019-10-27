@@ -1,32 +1,44 @@
 <html lang="en">
-<head>
-  <meta charset="utf-8"/>
-  <title>DomoMaker</title>
-  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
-  <link rel="shortcut icon" href="/assets/img/favicon.png"/>
-  <link rel="stylesheet" type="text/css" href="/assets/style.css"/>
-</head>
-<body>
-  <nav><a href="/login"><img id="logo" src="/assets/img/face.png" alt="face logo"/></a>
-    <div class="navlink"><a href="/logout">Log out</a></div>
-  </nav>
-  <section id="makeDomo">
-    <form id="domoForm" name="domoForm" action="/maker" method="POST" class="domoForm">
-      <label for="name">Name: </label>
-      <input id="domoName" type="text" name="name" placeholder="Domo Name"/>
-      <label for="age">Age: </label>
-      <input id="domoAge" type="text" name="age" placeholder="Domo Age"/>
-      <input class="makeDomoSubmit" type="submit" value="Make Domo" />
-    </form>
-  </section>
-  <section id="domos">
-    <div class="domo">
 
+<head>
+    <meta charset="utf-8" />
+    <title>DomoMaker</title>
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+    <link rel="shortcut icon" href="/assets/img/favicon.png" />
+    <link rel="stylesheet" type="text/css" href="/assets/style.css" />
+</head>
+
+<body>
+    <nav><a href="/login"><img id="logo" src="/assets/img/face.png" alt="face logo" /></a>
+        <div class="navlink"><a href="/logout">Log out</a></div>
+    </nav>
+    <section id="makeDomo">
+        <form id="domoForm" name="domoForm" action="/maker" method="POST" class="domoForm">
+            <label for="name">Name: </label>
+            <input id="domoName" type="text" name="name" placeholder="Domo Name" />
+            <label for="age">Age: </label>
+            <input id="domoAge" type="text" name="age" placeholder="Domo Age" />
+            <input class="makeDomoSubmit" type="submit" value="Make Domo" />
+        </form>
+    </section>
+    <section id="domos">
+        <div class="domo">
+            {{#if domos}}
+                {{#each domos}}
+                    <div class="domo"><img src="/assets/img/domoface.jpeg" alt="domo face" class="domoFace" />
+                        <h3 class="domoName">Name: {{this.name}}</h3>
+                        <h3 class="domoName">Age: {{this.age}}</h3>
+                    </div>
+                {{/each}}
+            {{else}}
+                <h3 class="emptyDomo">No Domos yet</h3>
+            {{/if}}
+        </div>
+    </section>
+    <div id="domoMessage"><img id="speech" src="/assets/img/speech.png" alt="speech box" />
+        <h3><span id="errorMessage"></span></h3><img id="domo" src="assets/img/domo.png" alt="domo" />
     </div>
-  </section>
-  <div id="domoMessage"><img id="speech" src="/assets/img/speech.png" alt="speech box"/>
-    <h3><span id="errorMessage"></span></h3><img id="domo" src="assets/img/domo.png" alt="domo"/>
-  </div>
-  <script src="/assets/bundle.js"></script>
+    <script src="/assets/bundle.js"></script>
 </body>
+
 </html>
