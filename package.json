@@ -2,7 +2,7 @@
   "name": "Logins",
   "version": "1.0.0",
   "engines": {
-    "node": "7.5.0",
+    "node": "10.16.0",
     "npm": "4.0.5"
   },
   "description": "A Simple Login Example using Node.js, Mongo and Redis",
