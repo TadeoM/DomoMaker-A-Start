@@ -1,17 +1,14 @@
-"use strict";
-"use strict";
-
-var handlError = function handlError(message) {
+const handlError = (message) => {
     $("#errorMessage").text(message);
-    $("#domoMessage").animate({ width: 'toggle' }, 350);
+    $("#domoMessage").animate({width:'toggle'},350);
 };
 
-var redirect = function redirect(response) {
-    $("#domoMessage").animate({ width: 'hide' }, 350);
+const redirect = (response) => {
+    $("#domoMessage").animate({width:'hide'}, 350);
     window.location = response.redirect;
 };
 
-var sendAjax = function sendAjax(type, action, data, success) {
+const sendAjax = (type, action, data, success) => {
     $.ajax({
         cache: false,
         type: type,
@@ -19,7 +16,7 @@ var sendAjax = function sendAjax(type, action, data, success) {
         data: data,
         dataType: "json",
         success: success,
-        error: function error(xhr, status, _error) {
+        error: function(xhr, status, error) {
             var messageObj = JSON.parse(xhr.responseText);
             handleError(messageObj.error);
         }
