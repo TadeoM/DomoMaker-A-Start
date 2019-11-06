@@ -43,7 +43,7 @@ const makeDomo = (req, res) => {
     return domoPromise;
 };
 
-/* Add after fix up to 30
+// Add after fix up to 30
 
 const getDomos = (request, response) => {
     const req = request;
@@ -59,6 +59,6 @@ const getDomos = (request, response) => {
     });
 };
 
-module.exports.getDomos = getDomos;*/
+module.exports.getDomos = getDomos;
 module.exports.makerPage = makerPage;
 module.exports.make = makeDomo;

@@ -1,5 +1,5 @@
 // add after fix to part 30
-/*
+
 const handleDomo = (e) => {
     e.preventDefault();
     
@@ -76,7 +76,7 @@ const setup = function(csrf) {
     );
     
     ReactDOM.render(
-        <DomoList domos={[]} />, document.querySelector("#domos)
+        <DomoList domos={[]} />, document.querySelector("#domos")
     );
     
     loadDomosFromServer();
@@ -92,4 +92,3 @@ $(document).ready(function() {
     getToken();
 });
 
-*/
