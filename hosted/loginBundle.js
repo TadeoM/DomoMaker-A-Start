@@ -22,7 +22,7 @@ var handleSignup = function handleSignup(e) {
 
     $("#domoMessage").animate({ width: 'hide' }, 350);
 
-    if ($("#user").val() === '' || $("#pass").val() === '' || $("#pass2").val() === '') {
+    if ($("#user").val() == '' || $("#pass").val() == '' || $("#pass2").val() == '') {
         handleError("RAWR! All fields are required");
         return false;
     }
@@ -40,8 +40,9 @@ var handleSignup = function handleSignup(e) {
 var LoginWindow = function LoginWindow(props) {
     return React.createElement(
         "form",
-        { id: "loginForm", name: "loginForm",
-            onsubmit: handleLogin,
+        { id: "loginForm",
+            name: "loginForm",
+            onSubmit: handleLogin,
             action: "/login",
             method: "POST",
             className: "mainForm"
@@ -59,7 +60,7 @@ var LoginWindow = function LoginWindow(props) {
         ),
         React.createElement("input", { id: "pass", type: "password", name: "pass", placeholder: "password" }),
         React.createElement("input", { type: "hidden", name: "_csrf", value: props.csrf }),
-        React.createElement("input", { className: "formSubmit", type: "submit", value: "Sign Up" })
+        React.createElement("input", { className: "formSubmit", type: "submit", value: "Sign In" })
     );
 };
 
@@ -68,7 +69,7 @@ var SignupWindow = function SignupWindow(props) {
         "form",
         { id: "signupForm",
             name: "signupForm",
-            onsubmit: handleSignup,
+            onSubmit: handleSignup,
             action: "/signup",
             method: "POST",
             className: "mainForm"
@@ -134,7 +135,7 @@ $(document).ready(function () {
 });
 "use strict";
 
-var handlError = function handlError(message) {
+var handleError = function handleError(message) {
     $("#errorMessage").text(message);
     $("#domoMessage").animate({ width: 'toggle' }, 350);
 };
