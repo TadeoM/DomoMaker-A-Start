@@ -81,6 +81,20 @@ const signup = (request, response) => {
     });
 };
 
+const getAccount = (request, response) => {
+    const req = request;
+    const res = response;
+
+    return Account.AccountModel.findByUsername(req.session.account.username, (err, docs) => {
+        if (err) {
+            console.log(err);
+            return res.status(400).json({ error: 'An error occurred' });
+        }
+        
+        return res.json({ account: docs });
+    });
+};
+
 const getToken = (request, response) => {
     const req = request;
     const res = response;
@@ -97,3 +111,4 @@ module.exports.login = login;
 module.exports.logout = logout;
 module.exports.signup = signup;
 module.exports.getToken = getToken;
+module.exports.getAccount = getAccount;

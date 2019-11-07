@@ -88,9 +88,17 @@ var DomoList = function DomoList(props) {
     );
 };
 
+var AccountData = function AccountData(props) {};
+
 var loadDomosFromServer = function loadDomosFromServer() {
     sendAjax('GET', '/getDomos', null, function (data) {
         ReactDOM.render(React.createElement(DomoList, { domos: data.domos }), document.querySelector("#domos"));
+    });
+};
+
+var loadAccountFromServer = function loadAccountFromServer() {
+    sendAjax('GET', '/getAccount', null, function (data) {
+        console.log(data);
     });
 };
 
@@ -99,7 +107,12 @@ var setup = function setup(csrf) {
 
     ReactDOM.render(React.createElement(DomoList, { domos: [] }), document.querySelector("#domos"));
 
+    /*ReactDOM.render(
+        <AccountData stats={} />, document.querySelector("#domos")
+    );*/
+
     loadDomosFromServer();
+    loadAccountFromServer();
 };
 
 var getToken = function getToken() {

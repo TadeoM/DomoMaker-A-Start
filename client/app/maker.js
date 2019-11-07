@@ -62,10 +62,23 @@ const DomoList = function(props) {
     );
 };
 
+const AccountData = function(props) {
+
+};
+
 const loadDomosFromServer = () => {
     sendAjax('GET', '/getDomos', null, (data) =>{
         ReactDOM.render(
             <DomoList domos={data.domos} />, document.querySelector("#domos")
+        );
+    });
+};
+
+/// need to fix this!!!!
+const loadAccountFromServer = () => {
+    sendAjax('GET', '/getAccount', null, (data) =>{
+        ReactDOM.render(
+            <AccountData account={data.domos} />, document.querySelector("#domos")
         );
     });
 };
@@ -78,8 +91,13 @@ const setup = function(csrf) {
     ReactDOM.render(
         <DomoList domos={[]} />, document.querySelector("#domos")
     );
+
+    /*ReactDOM.render(
+        <AccountData stats={} />, document.querySelector("#domos")
+    );*/
     
     loadDomosFromServer();
+    loadAccountFromServer();
 };
 
 const getToken = () => {
