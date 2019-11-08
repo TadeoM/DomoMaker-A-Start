@@ -47,7 +47,7 @@ nav:nth-child(1) {
     background-color: #66bdff;
 }
 
-.domoForm {
+.domoForm, .accountData {
     border: 2px solid #338acc;
     height: 35px;
     width: 700px;
@@ -58,7 +58,7 @@ nav:nth-child(1) {
     border-top-right-radius: 4px;
 }
 
-.domoForm label {
+.domoForm label, .accountData label {
     display: inline-block;
     width: 75px;
     margin-left: 10px;

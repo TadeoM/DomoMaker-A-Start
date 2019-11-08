@@ -63,7 +63,12 @@ const DomoList = function(props) {
 };
 
 const AccountData = function(props) {
-
+    return (
+        <div>
+            <h3 id="accountName">User: {props.account.username}</h3>
+            <h3 id="accountStr">Strength: {props.account.strength}</h3>
+        </div>
+    );
 };
 
 const loadDomosFromServer = () => {
@@ -77,8 +82,9 @@ const loadDomosFromServer = () => {
 /// need to fix this!!!!
 const loadAccountFromServer = () => {
     sendAjax('GET', '/getAccount', null, (data) =>{
+        console.log(data.account.strength);
         ReactDOM.render(
-            <AccountData account={data.domos} />, document.querySelector("#domos")
+            <AccountData account={data.account} />, document.querySelector("#accountData")
         );
     });
 };
@@ -91,10 +97,6 @@ const setup = function(csrf) {
     ReactDOM.render(
         <DomoList domos={[]} />, document.querySelector("#domos")
     );
-
-    /*ReactDOM.render(
-        <AccountData stats={} />, document.querySelector("#domos")
-    );*/
     
     loadDomosFromServer();
     loadAccountFromServer();

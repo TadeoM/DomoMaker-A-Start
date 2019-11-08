@@ -88,7 +88,16 @@ var DomoList = function DomoList(props) {
     );
 };
 
-var AccountData = function AccountData(props) {};
+var AccountData = function AccountData(props) {
+    return React.createElement(
+        "p",
+        null,
+        "User: ",
+        props.account.username,
+        "  Strength: ",
+        props.account.strength
+    );
+};
 
 var loadDomosFromServer = function loadDomosFromServer() {
     sendAjax('GET', '/getDomos', null, function (data) {
@@ -96,9 +105,11 @@ var loadDomosFromServer = function loadDomosFromServer() {
     });
 };
 
+/// need to fix this!!!!
 var loadAccountFromServer = function loadAccountFromServer() {
     sendAjax('GET', '/getAccount', null, function (data) {
-        console.log(data);
+        console.log(data.account.strength);
+        ReactDOM.render(React.createElement(AccountData, { account: data.account }), document.querySelector("#accountData"));
     });
 };
 
@@ -106,10 +117,6 @@ var setup = function setup(csrf) {
     ReactDOM.render(React.createElement(DomoForm, { csrf: csrf }), document.querySelector("#makeDomo"));
 
     ReactDOM.render(React.createElement(DomoList, { domos: [] }), document.querySelector("#domos"));
-
-    /*ReactDOM.render(
-        <AccountData stats={} />, document.querySelector("#domos")
-    );*/
 
     loadDomosFromServer();
     loadAccountFromServer();
