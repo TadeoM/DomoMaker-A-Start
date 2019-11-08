@@ -99,14 +99,18 @@ const createStats = (request, response) => {
     const req = request;
     const res = response;
 
-    return Account.AccountModel.findByUsername(req.session.account.username, (err, docs) => {        
-        const updateAccount = accountData;
-        updateAccount.strength = req.body.strength;
+    return Account.AccountModel.findByUsername(req.session.account.username, (err, doc) => {  
+        console.log("Showing Req body");
+        console.log(req.body); 
+
+          
+        const updateAccount = doc;
+        updateAccount.strength = req.body.str;
         
         const savePromise = updateAccount.save();
         
         savePromise.then(() => {
-            req.session.account = Account.AccountModel.toAPI(newAccount);
+            req.session.account = Account.AccountModel.toAPI(updateAccount);
             
             return res.json({ redirect: '/maker' }); // changed from maker so that I can go to the creator page
         });
@@ -133,7 +137,7 @@ const creatorPage = (req, res) => {
             return res.status(400).json({ error: 'An error occurred' });
         }
         
-        return res.render('app', { csrfToken: req.csrfToken(), account: docs });
+        return res.render('creation', { csrfToken: req.csrfToken(), account: docs });
     });
 };
 

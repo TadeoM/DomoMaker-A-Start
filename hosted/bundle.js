@@ -94,14 +94,10 @@ var AccountData = function AccountData(props) {
         null,
         React.createElement(
             "h3",
-            { id: "accountName" },
+            { className: "accountName" },
             "User: ",
-            props.account.username
-        ),
-        React.createElement(
-            "h3",
-            { id: "accountStr" },
-            "Strength: ",
+            props.account.username,
+            "   Strength: ",
             props.account.strength
         )
     );
@@ -113,7 +109,6 @@ var loadDomosFromServer = function loadDomosFromServer() {
     });
 };
 
-/// need to fix this!!!!
 var loadAccountFromServer = function loadAccountFromServer() {
     sendAjax('GET', '/getAccount', null, function (data) {
         console.log(data.account.strength);

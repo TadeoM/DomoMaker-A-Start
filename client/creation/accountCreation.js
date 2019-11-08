@@ -1,4 +1,3 @@
-
 const handleCreation = (e) => {
     e.preventDefault();
 
@@ -9,7 +8,7 @@ const handleCreation = (e) => {
         return false;
     }
 
-    console.log($("input[name=_csrf").val());
+    console.log($("input[name=_csrf]").val());
 
     sendAjax('POST', $("#accountForm").attr("action"), $("#accountForm").serialize(), redirect);
 

@@ -64,9 +64,8 @@ const DomoList = function(props) {
 
 const AccountData = function(props) {
     return (
-        <div>
-            <h3 id="accountName">User: {props.account.username}</h3>
-            <h3 id="accountStr">Strength: {props.account.strength}</h3>
+        <div >
+            <h3 className="accountName">User: {props.account.username}   Strength: {props.account.strength}</h3>
         </div>
     );
 };
@@ -79,7 +78,6 @@ const loadDomosFromServer = () => {
     });
 };
 
-/// need to fix this!!!!
 const loadAccountFromServer = () => {
     sendAjax('GET', '/getAccount', null, (data) =>{
         console.log(data.account.strength);
