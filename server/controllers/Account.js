@@ -99,22 +99,16 @@ const createStats = (request, response) => {
     const req = request;
     const res = response;
 
-    return Account.AccountModel.generateHash(req.body.pass, (salt, hash) => {
-        const accountData = {
-            username: req.body.username,
-            strength: req.body.strength,
-            salt,
-            password: hash,
-        };
-        
+    return Account.AccountModel.findByUsername(req.session.account.username, (err, docs) => {        
         const updateAccount = accountData;
+        updateAccount.strength = req.body.strength;
         
         const savePromise = updateAccount.save();
         
         savePromise.then(() => {
             req.session.account = Account.AccountModel.toAPI(newAccount);
             
-            return res.json({ redirect: '/creator' }); // changed from maker so that I can go to the creator page
+            return res.json({ redirect: '/maker' }); // changed from maker so that I can go to the creator page
         });
         
         savePromise.catch((err) => {
@@ -128,10 +122,11 @@ const createStats = (request, response) => {
         })
     
     });
-
 };
 
 const creatorPage = (req, res) => {
+    console.log(res.session);
+
     Account.AccountModel.findByUsername(req.session.account.username, (err, docs) => {
         if(err) {
             console.log(err);
@@ -140,37 +135,6 @@ const creatorPage = (req, res) => {
         
         return res.render('app', { csrfToken: req.csrfToken(), account: docs });
     });
-};
-
-// not used
-const makeDomo = (req, res) => {
-    if (!req.body.name || !req.body.age) {
-        return res.status(400).json({ error: 'RAWR! Both name and age are required' });
-    }
-    
-    const domoData = {
-        name: req.body.name,
-        age: req.body.age,
-        owner: req.session.account._id,
-    };
-    
-    const newDomo = new Domo.DomoModel(domoData);
-    
-    const domoPromise = newDomo.save();
-    
-    
-    domoPromise.then(() => res.json({ redirect: '/maker' }));
-    
-    domoPromise.catch((err) => {
-        console.log(err);
-        if(err.code === 11000) {
-            return res.status(400).json({ error: 'Domo already exists.' });
-        }
-        
-        return res.status(400).json({ error: 'An error occurred' });
-    });
-    
-    return domoPromise;
 };
 
 const getToken = (request, response) => {
@@ -190,3 +154,5 @@ module.exports.logout = logout;
 module.exports.signup = signup;
 module.exports.getToken = getToken;
 module.exports.getAccount = getAccount;
+module.exports.creatorPage = creatorPage;
+module.exports.createStats = createStats;
