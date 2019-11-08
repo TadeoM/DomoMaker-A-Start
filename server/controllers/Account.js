@@ -30,7 +30,7 @@ const login = (request, response) => {
         
         req.session.account = Account.AccountModel.toAPI(account);
         
-        return res.json({ redirect: '/maker'}); // changed from maker so that I can go to the creator page
+        return res.json({ redirect: '/maker'});
     })
 };
 
@@ -65,7 +65,7 @@ const signup = (request, response) => {
         savePromise.then(() => {
             req.session.account = Account.AccountModel.toAPI(newAccount);
             
-            return res.json({ redirect: '/creator' }); // changed from maker so that I can go to the creator page
+            return res.json({ redirect: '/creator' }); 
         });
         
         savePromise.catch((err) => {
@@ -112,13 +112,13 @@ const createStats = (request, response) => {
         savePromise.then(() => {
             req.session.account = Account.AccountModel.toAPI(updateAccount);
             
-            return res.json({ redirect: '/maker' }); // changed from maker so that I can go to the creator page
+            return res.json({ redirect: '/maker' }); 
         });
         
-        savePromise.catch((err) => {
-            console.log(err);
+        savePromise.catch((error) => {
+            console.log(error);
             
-            if (err.code === 11000) {
+            if (error.code === 11000) {
                 return res.status(400).json({ error: 'Username already in use.'});
             }
             
