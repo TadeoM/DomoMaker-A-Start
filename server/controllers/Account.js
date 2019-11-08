@@ -30,7 +30,7 @@ const login = (request, response) => {
         
         req.session.account = Account.AccountModel.toAPI(account);
         
-        return res.json({ redirect: '/maker'});
+        return res.json({ redirect: '/maker'}); // changed from maker so that I can go to the creator page
     })
 };
 
@@ -65,7 +65,7 @@ const signup = (request, response) => {
         savePromise.then(() => {
             req.session.account = Account.AccountModel.toAPI(newAccount);
             
-            return res.json({ redirect: '/maker' });
+            return res.json({ redirect: '/creator' }); // changed from maker so that I can go to the creator page
         });
         
         savePromise.catch((err) => {
@@ -93,6 +93,84 @@ const getAccount = (request, response) => {
         
         return res.json({ account: docs });
     });
+};
+
+const createStats = (request, response) => {
+    const req = request;
+    const res = response;
+
+    return Account.AccountModel.generateHash(req.body.pass, (salt, hash) => {
+        const accountData = {
+            username: req.body.username,
+            strength: req.body.strength,
+            salt,
+            password: hash,
+        };
+        
+        const updateAccount = accountData;
+        
+        const savePromise = updateAccount.save();
+        
+        savePromise.then(() => {
+            req.session.account = Account.AccountModel.toAPI(newAccount);
+            
+            return res.json({ redirect: '/creator' }); // changed from maker so that I can go to the creator page
+        });
+        
+        savePromise.catch((err) => {
+            console.log(err);
+            
+            if (err.code === 11000) {
+                return res.status(400).json({ error: 'Username already in use.'});
+            }
+            
+            return res.status(400).json({ error: 'An error occured'});
+        })
+    
+    });
+
+};
+
+const creatorPage = (req, res) => {
+    Account.AccountModel.findByUsername(req.session.account.username, (err, docs) => {
+        if(err) {
+            console.log(err);
+            return res.status(400).json({ error: 'An error occurred' });
+        }
+        
+        return res.render('app', { csrfToken: req.csrfToken(), account: docs });
+    });
+};
+
+// not used
+const makeDomo = (req, res) => {
+    if (!req.body.name || !req.body.age) {
+        return res.status(400).json({ error: 'RAWR! Both name and age are required' });
+    }
+    
+    const domoData = {
+        name: req.body.name,
+        age: req.body.age,
+        owner: req.session.account._id,
+    };
+    
+    const newDomo = new Domo.DomoModel(domoData);
+    
+    const domoPromise = newDomo.save();
+    
+    
+    domoPromise.then(() => res.json({ redirect: '/maker' }));
+    
+    domoPromise.catch((err) => {
+        console.log(err);
+        if(err.code === 11000) {
+            return res.status(400).json({ error: 'Domo already exists.' });
+        }
+        
+        return res.status(400).json({ error: 'An error occurred' });
+    });
+    
+    return domoPromise;
 };
 
 const getToken = (request, response) => {
